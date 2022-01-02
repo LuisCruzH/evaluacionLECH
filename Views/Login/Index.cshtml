@@ -26,7 +26,7 @@
     </style>
 </head>
 <body class="text-center">
-    <main class="form-signin">
+    <main class=" form-signin">
         @using (Ajax.BeginForm("Login", "Login", "", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Ingresar", UpdateTargetId = "divRespuesta" }, new { @id = "frmLogin" }))
         {
             <img class="mb-4" src="~/Content/Img/portafolio.png" alt="" width="72" height="57">
@@ -42,7 +42,7 @@
 
             <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
             <p class="mt-5 mb-3 text-muted">&copy; LECH - 2022</p>
-            <div id="divRespuesta"></div>
+            <div id="divRespuesta" style="display:none;"></div>
         }
     </main>
 
