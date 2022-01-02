@@ -24,32 +24,39 @@
             user-select: none;
         }
     </style>
-    <link href="signin.css" rel="stylesheet">
 </head>
 <body class="text-center">
     <main class="form-signin">
-        <form>
-            @using (Ajax.BeginForm("Login", "Login", "", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Ingresar", UpdateTargetId = "divRespuesta" }, new { @id = "frmLogin" }))
-            {
-                <img class="mb-4" src="~/Content/Img/portafolio.png" alt="" width="72" height="57">
-                <h1 class="h3 mb-3 fw-normal">Seguimiento de clientes</h1>
-                <div class="form-floating">
-                    @Html.TextBox("username", null, new { @class = "form-control", @placeholder = "Usuario", @required = "true", @id = "floatingInput" })
-                    <label for="floatingInput">Usuario</label>
-                </div>
-                <div class="form-floating">
-                    @Html.Password("password", null, new { @class = "form-control", @placeholder = "*******", @required = "true", @id = "floatingPassword" })
-                    <label for="floatingPassword">Contraseña</label>
-                </div>
+        @using (Ajax.BeginForm("Login", "Login", "", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Ingresar", UpdateTargetId = "divRespuesta" }, new { @id = "frmLogin" }))
+        {
+            <img class="mb-4" src="~/Content/Img/portafolio.png" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Seguimiento de clientes</h1>
+            <div class="form-floating">
+                @Html.TextBox("username", null, new { @class = "form-control", @required = "true", @id = "floatingInput" })
+                <label for="floatingInput">Usuario</label>
+            </div>
+            <div class="form-floating">
+                @Html.Password("password", null, new { @class = "form-control", @required = "true", @id = "floatingPassword" })
+                <label for="floatingPassword">Contraseña</label>
+            </div>
 
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
-                <p class="mt-5 mb-3 text-muted">&copy; LECH - 2022</p>
-            }
-        </form>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
+            <p class="mt-5 mb-3 text-muted">&copy; LECH - 2022</p>
+            <div id="divRespuesta"></div>
+        }
     </main>
 
 
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>
-    
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript">
+        function Ingresar(rpta) {
+            if (rpta == "1") {
+                document.location.href = "@Url.Action("Index","Captura")";
+                    } else {
+                alert("Usuario o contraseña incorrectos");
+            }
+        }
+    </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="evaluacionBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="evaluacionBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="datos_prospecto">
           <Key>
             <PropertyRef Name="id_datos" />
@@ -37,6 +37,17 @@
           <Property Name="rfc" Type="varchar" MaxLength="40" />
           <Property Name="estatus" Type="int" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="15" />
+          <Property Name="contrasena" Type="varchar" MaxLength="20" />
+          <Property Name="nombre" Type="varchar" MaxLength="15" />
+        </EntityType>
         <Association Name="prospecto_datos_prospecto">
           <End Role="prospecto" Type="Self.prospecto" Multiplicity="1" />
           <End Role="datos_prospecto" Type="Self.datos_prospecto" Multiplicity="*" />
@@ -65,6 +76,14 @@
           <EntitySet Name="datos_prospecto" EntityType="Self.datos_prospecto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="documentos" EntityType="Self.documentos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="prospecto" EntityType="Self.prospecto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [usuario].[id_usuario] AS [id_usuario], 
+    [usuario].[usuario] AS [usuario], 
+    [usuario].[contrasena] AS [contrasena], 
+    [usuario].[nombre] AS [nombre]
+    FROM [dbo].[usuario] AS [usuario]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="prospecto_datos_prospecto" Association="Self.prospecto_datos_prospecto">
             <End Role="prospecto" EntitySet="prospecto" />
             <End Role="datos_prospecto" EntitySet="datos_prospecto" />
@@ -74,8 +93,7 @@
             <End Role="documentos" EntitySet="documentos" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="evaluacionBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -151,7 +169,17 @@
             <End Role="prospecto" EntitySet="prospecto" />
             <End Role="documentos" EntitySet="documentos" />
           </AssociationSet>
+          <EntitySet Name="usuario" EntityType="evaluacionBDModel.usuario" />
         </EntityContainer>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="contrasena" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -190,6 +218,16 @@
                 <ScalarProperty Name="a_materno" ColumnName="a_materno" />
                 <ScalarProperty Name="rfc" ColumnName="rfc" />
                 <ScalarProperty Name="estatus" ColumnName="estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="evaluacionBDModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="usuario1" ColumnName="usuario" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

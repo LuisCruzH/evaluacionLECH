@@ -7,23 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-
-public partial class evaluacionBDEntities : DbContext
+namespace evaluacionLECH.Models
 {
-    public evaluacionBDEntities()
-        : base("name=evaluacionBDEntities")
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    
+    public partial class evaluacionBDEntities : DbContext
     {
+        public evaluacionBDEntities()
+            : base("name=evaluacionBDEntities")
+        {
+        }
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
+        public virtual DbSet<datos_prospecto> datos_prospecto { get; set; }
+        public virtual DbSet<documentos> documentos { get; set; }
+        public virtual DbSet<prospecto> prospecto { get; set; }
+        public virtual DbSet<usuario> usuario { get; set; }
     }
-
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-        throw new UnintentionalCodeFirstException();
-    }
-
-    public virtual DbSet<datos_prospecto> datos_prospecto { get; set; }
-    public virtual DbSet<documentos> documentos { get; set; }
-    public virtual DbSet<prospecto> prospecto { get; set; }
 }

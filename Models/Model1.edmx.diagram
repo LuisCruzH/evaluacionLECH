@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="evaluacionBDModel.prospecto" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
         <AssociationConnector Association="evaluacionBDModel.prospecto_datos_prospecto" ManuallyRouted="false" />
         <AssociationConnector Association="evaluacionBDModel.prospecto_documentos" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="evaluacionBDModel.usuario" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
