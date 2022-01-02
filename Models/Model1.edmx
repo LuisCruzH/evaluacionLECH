@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="evaluacionBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="datos_prospecto">
+          <Key>
+            <PropertyRef Name="id_datos" />
+          </Key>
+          <Property Name="id_datos" Type="int" Nullable="false" />
+          <Property Name="calle" Type="varchar" MaxLength="15" />
+          <Property Name="numero" Type="varchar" MaxLength="40" />
+          <Property Name="colonia" Type="varchar" MaxLength="40" />
+          <Property Name="codigo_postal" Type="int" />
+          <Property Name="telefono" Type="varchar" MaxLength="40" />
+          <Property Name="id_prospecto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="documentos">
+          <Key>
+            <PropertyRef Name="id_documento" />
+          </Key>
+          <Property Name="id_documento" Type="int" Nullable="false" />
+          <Property Name="tipo_documento" Type="varchar" MaxLength="20" />
+          <Property Name="documento" Type="varchar" MaxLength="40" />
+          <Property Name="id_prospecto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="prospecto">
+          <Key>
+            <PropertyRef Name="id_prospecto" />
+          </Key>
+          <Property Name="id_prospecto" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="25" />
+          <Property Name="a_paterno" Type="varchar" MaxLength="15" />
+          <Property Name="a_materno" Type="varchar" MaxLength="15" />
+          <Property Name="rfc" Type="varchar" MaxLength="40" />
+          <Property Name="estatus" Type="int" />
+        </EntityType>
+        <Association Name="prospecto_datos_prospecto">
+          <End Role="prospecto" Type="Self.prospecto" Multiplicity="1" />
+          <End Role="datos_prospecto" Type="Self.datos_prospecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prospecto">
+              <PropertyRef Name="id_prospecto" />
+            </Principal>
+            <Dependent Role="datos_prospecto">
+              <PropertyRef Name="id_prospecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prospecto_documentos">
+          <End Role="prospecto" Type="Self.prospecto" Multiplicity="1" />
+          <End Role="documentos" Type="Self.documentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prospecto">
+              <PropertyRef Name="id_prospecto" />
+            </Principal>
+            <Dependent Role="documentos">
+              <PropertyRef Name="id_prospecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="evaluacionBDModelStoreContainer">
+          <EntitySet Name="datos_prospecto" EntityType="Self.datos_prospecto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="documentos" EntityType="Self.documentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="prospecto" EntityType="Self.prospecto" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="prospecto_datos_prospecto" Association="Self.prospecto_datos_prospecto">
+            <End Role="prospecto" EntitySet="prospecto" />
+            <End Role="datos_prospecto" EntitySet="datos_prospecto" />
+          </AssociationSet>
+          <AssociationSet Name="prospecto_documentos" Association="Self.prospecto_documentos">
+            <End Role="prospecto" EntitySet="prospecto" />
+            <End Role="documentos" EntitySet="documentos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="evaluacionBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="datos_prospecto">
+          <Key>
+            <PropertyRef Name="id_datos" />
+          </Key>
+          <Property Name="id_datos" Type="Int32" Nullable="false" />
+          <Property Name="calle" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="colonia" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_postal" Type="Int32" />
+          <Property Name="telefono" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="id_prospecto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="prospecto" Relationship="Self.prospecto_datos_prospecto" FromRole="datos_prospecto" ToRole="prospecto" />
+        </EntityType>
+        <EntityType Name="documentos">
+          <Key>
+            <PropertyRef Name="id_documento" />
+          </Key>
+          <Property Name="id_documento" Type="Int32" Nullable="false" />
+          <Property Name="tipo_documento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="documento" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="id_prospecto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="prospecto" Relationship="Self.prospecto_documentos" FromRole="documentos" ToRole="prospecto" />
+        </EntityType>
+        <EntityType Name="prospecto">
+          <Key>
+            <PropertyRef Name="id_prospecto" />
+          </Key>
+          <Property Name="id_prospecto" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="a_paterno" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="a_materno" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="rfc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="estatus" Type="Int32" />
+          <NavigationProperty Name="datos_prospecto" Relationship="Self.prospecto_datos_prospecto" FromRole="prospecto" ToRole="datos_prospecto" />
+          <NavigationProperty Name="documentos" Relationship="Self.prospecto_documentos" FromRole="prospecto" ToRole="documentos" />
+        </EntityType>
+        <Association Name="prospecto_datos_prospecto">
+          <End Role="prospecto" Type="Self.prospecto" Multiplicity="1" />
+          <End Role="datos_prospecto" Type="Self.datos_prospecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prospecto">
+              <PropertyRef Name="id_prospecto" />
+            </Principal>
+            <Dependent Role="datos_prospecto">
+              <PropertyRef Name="id_prospecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prospecto_documentos">
+          <End Role="prospecto" Type="Self.prospecto" Multiplicity="1" />
+          <End Role="documentos" Type="Self.documentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prospecto">
+              <PropertyRef Name="id_prospecto" />
+            </Principal>
+            <Dependent Role="documentos">
+              <PropertyRef Name="id_prospecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="evaluacionBDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="datos_prospecto" EntityType="Self.datos_prospecto" />
+          <EntitySet Name="documentos" EntityType="Self.documentos" />
+          <EntitySet Name="prospecto" EntityType="Self.prospecto" />
+          <AssociationSet Name="prospecto_datos_prospecto" Association="Self.prospecto_datos_prospecto">
+            <End Role="prospecto" EntitySet="prospecto" />
+            <End Role="datos_prospecto" EntitySet="datos_prospecto" />
+          </AssociationSet>
+          <AssociationSet Name="prospecto_documentos" Association="Self.prospecto_documentos">
+            <End Role="prospecto" EntitySet="prospecto" />
+            <End Role="documentos" EntitySet="documentos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="evaluacionBDModelStoreContainer" CdmEntityContainer="evaluacionBDEntities">
+          <EntitySetMapping Name="datos_prospecto">
+            <EntityTypeMapping TypeName="evaluacionBDModel.datos_prospecto">
+              <MappingFragment StoreEntitySet="datos_prospecto">
+                <ScalarProperty Name="id_datos" ColumnName="id_datos" />
+                <ScalarProperty Name="calle" ColumnName="calle" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="colonia" ColumnName="colonia" />
+                <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="id_prospecto" ColumnName="id_prospecto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documentos">
+            <EntityTypeMapping TypeName="evaluacionBDModel.documentos">
+              <MappingFragment StoreEntitySet="documentos">
+                <ScalarProperty Name="id_documento" ColumnName="id_documento" />
+                <ScalarProperty Name="tipo_documento" ColumnName="tipo_documento" />
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="id_prospecto" ColumnName="id_prospecto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prospecto">
+            <EntityTypeMapping TypeName="evaluacionBDModel.prospecto">
+              <MappingFragment StoreEntitySet="prospecto">
+                <ScalarProperty Name="id_prospecto" ColumnName="id_prospecto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="a_paterno" ColumnName="a_paterno" />
+                <ScalarProperty Name="a_materno" ColumnName="a_materno" />
+                <ScalarProperty Name="rfc" ColumnName="rfc" />
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
