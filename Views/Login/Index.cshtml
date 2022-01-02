@@ -23,10 +23,13 @@
             -moz-user-select: none;
             user-select: none;
         }
+        .minimo{
+            min-height:100%;
+        }
     </style>
 </head>
-<body class="text-center">
-    <main class=" form-signin">
+<body class="text-center minimo">
+    <div class=" form-signin minimo">
         @using (Ajax.BeginForm("Login", "Login", "", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Ingresar", UpdateTargetId = "divRespuesta" }, new { @id = "frmLogin" }))
         {
             <img class="mb-4" src="~/Content/Img/portafolio.png" alt="" width="72" height="57">
@@ -44,7 +47,7 @@
             <p class="mt-5 mb-3 text-muted">&copy; LECH - 2022</p>
             <div id="divRespuesta" style="display:none;"></div>
         }
-    </main>
+    </div>
 
 
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>

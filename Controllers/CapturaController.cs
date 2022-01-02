@@ -11,7 +11,20 @@ namespace evaluacionLECH.Controllers
     {
         public ActionResult Index()
         {
-            using (var bd=new evaluacionBDEntities())
+            /*List<SelectListItem> tDocumento = new List<SelectListItem>() {
+                new SelectListItem {
+                    Text = "ASP.NET MVC", Value = "1"
+                },
+                new SelectListItem {
+                    Text = "ASP.NET WEB API", Value = "2"
+                },
+                new SelectListItem {
+                    Text = "ENTITY FRAMEWORK", Value = "3"
+                }
+            };*/
+
+
+            using (var bd = new evaluacionBDEntities())
             {
 
             }
