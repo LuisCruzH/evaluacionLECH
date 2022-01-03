@@ -19,7 +19,6 @@ namespace evaluacionLECH.Models
         public string numero { get; set; }
         public string colonia { get; set; }
         public Nullable<int> codigo_postal { get; set; }
-        public string telefono { get; set; }
         public int id_prospecto { get; set; }
     
         public virtual prospecto prospecto { get; set; }

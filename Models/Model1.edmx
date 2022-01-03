@@ -9,19 +9,18 @@
           <Key>
             <PropertyRef Name="id_datos" />
           </Key>
-          <Property Name="id_datos" Type="int" Nullable="false" />
+          <Property Name="id_datos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="calle" Type="varchar" MaxLength="15" />
-          <Property Name="numero" Type="varchar" MaxLength="40" />
+          <Property Name="numero" Type="varchar" MaxLength="10" />
           <Property Name="colonia" Type="varchar" MaxLength="40" />
           <Property Name="codigo_postal" Type="int" />
-          <Property Name="telefono" Type="varchar" MaxLength="40" />
           <Property Name="id_prospecto" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="documentos">
           <Key>
             <PropertyRef Name="id_documento" />
           </Key>
-          <Property Name="id_documento" Type="int" Nullable="false" />
+          <Property Name="id_documento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="tipo_documento" Type="varchar" MaxLength="20" />
           <Property Name="documento" Type="varchar" MaxLength="40" />
           <Property Name="id_prospecto" Type="int" Nullable="false" />
@@ -30,11 +29,12 @@
           <Key>
             <PropertyRef Name="id_prospecto" />
           </Key>
-          <Property Name="id_prospecto" Type="int" Nullable="false" />
+          <Property Name="id_prospecto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="25" />
           <Property Name="a_paterno" Type="varchar" MaxLength="15" />
           <Property Name="a_materno" Type="varchar" MaxLength="15" />
-          <Property Name="rfc" Type="varchar" MaxLength="40" />
+          <Property Name="telefono" Type="varchar" MaxLength="13" />
+          <Property Name="rfc" Type="varchar" MaxLength="13" />
           <Property Name="estatus" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
@@ -103,10 +103,9 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
           </Key>
           <Property Name="id_datos" Type="Int32" Nullable="false" />
           <Property Name="calle" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="numero" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="colonia" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="codigo_postal" Type="Int32" />
-          <Property Name="telefono" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="id_prospecto" Type="Int32" Nullable="false" />
           <NavigationProperty Name="prospecto" Relationship="Self.prospecto_datos_prospecto" FromRole="datos_prospecto" ToRole="prospecto" />
         </EntityType>
@@ -128,10 +127,11 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
           <Property Name="nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="a_paterno" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="a_materno" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="rfc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="rfc" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="estatus" Type="Int32" />
           <NavigationProperty Name="datos_prospecto" Relationship="Self.prospecto_datos_prospecto" FromRole="prospecto" ToRole="datos_prospecto" />
           <NavigationProperty Name="documentos" Relationship="Self.prospecto_documentos" FromRole="prospecto" ToRole="documentos" />
+          <Property Name="telefono" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="prospecto_datos_prospecto">
           <End Role="prospecto" Type="Self.prospecto" Multiplicity="1" />
@@ -194,7 +194,6 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
                 <ScalarProperty Name="numero" ColumnName="numero" />
                 <ScalarProperty Name="colonia" ColumnName="colonia" />
                 <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="id_prospecto" ColumnName="id_prospecto" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -212,6 +211,7 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
           <EntitySetMapping Name="prospecto">
             <EntityTypeMapping TypeName="evaluacionBDModel.prospecto">
               <MappingFragment StoreEntitySet="prospecto">
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="id_prospecto" ColumnName="id_prospecto" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="a_paterno" ColumnName="a_paterno" />
