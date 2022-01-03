@@ -1,0 +1,130 @@
+﻿@using evaluacionLECH.Models
+@model CapturaCLS
+@{
+    ViewBag.Title = "Registro de prospecto";
+}
+<style>
+    .espacio {
+        margin-bottom: 3rem;
+    }
+
+    .itemAltura {
+        margin-top: 1rem;
+    }
+
+    .buttons {
+        margin: 0.5rem;
+    }
+</style>
+
+@using (Html.BeginForm("Agregar", "Captura", FormMethod.Post, new { @class = "espacio", @style = "margin-top:1.5rem;" }))
+{
+    <div class="row" style="margin-bottom:2rem;">
+        <div class="col" style="text-align:center;">
+            <h2>
+                <i class="fas fa-user-edit"></i>&nbsp;&nbsp;Registro de Prospecto
+            </h2>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            Datos generales
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-12 col-sm-6 col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.nombreProspecto, new { @for = "txtNombre" })
+                    @Html.TextBoxFor(p => p.nombreProspecto, new { @class = "form-control" })
+                    @Html.ValidationMessage("nombreProspecto", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.aPaternoProspecto, new { @for = "txtaPaterno" })
+                    @Html.TextBoxFor(p => p.aPaternoProspecto, new { @class = "form-control", @id = "txtaPaterno" })
+                    @Html.ValidationMessage("aPaternoProspecto", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.aMaternoProspecto, new { @for = "txtaMaterno" })
+                    @Html.TextBoxFor(p => p.aMaternoProspecto, new { @class = "form-control", @id = "txtaMaterno" })
+                    @Html.ValidationMessage("aMaternoProspecto", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.rfcProspecto, new { @for = "txtRfc" })
+                    @Html.TextBoxFor(p => p.rfcProspecto, new { @class = "form-control", @id = "txtRfc" })
+                    @Html.ValidationMessage("rfcProspecto", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.telefonoProspecto, new { @for = "txtTelefono" })
+                    @Html.TextBoxFor(p => p.telefonoProspecto, new { @class = "form-control", @id = "txtTelefono" })
+                    @Html.ValidationMessage("telefonoProspecto", new { @class = "text-danger" })
+
+                </div>
+            </div>
+        </div>
+        <div class="card-header" style="margin-top:2rem;">
+            Dirección
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-12 col-sm-6 col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.calle, new { @for = "txtCalle" })
+                    @Html.TextBoxFor(p => p.calle, new { @class = "form-control", @id = "txtCalle" })
+                    @Html.ValidationMessage("calle", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.numero, new { @for = "txtNumero" })
+                    @Html.TextBoxFor(p => p.numero, new { @class = "form-control", @id = "txtNumero" })
+                    @Html.ValidationMessage("numero", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.colonia, new { @for = "txtColonia" })
+                    @Html.TextBoxFor(p => p.colonia, new { @class = "form-control", @id = "txtColonia" })
+                    @Html.ValidationMessage("colonia", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.codigoPostal, new { @for = "txtCPostal" })
+                    @Html.TextBoxFor(p => p.codigoPostal, new { @class = "form-control", @id = "txtCPostal", @type = "number" })
+                    @Html.ValidationMessage("codigoPostal", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="card-header" style="margin-top:2rem;">
+            Documentos
+        </div>
+        <div class="card-body">
+            <div class="row" style="margin-left:auto; margin-right:auto;">
+                <div class="form-group col-12 col-sm-6 col-md-6">
+                    <div style="margin-top:2rem;">
+                        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                    </div>
+
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4">
+                    <div style="margin-top:2rem;">
+                        <a class="btn btn-outline-success" href="#">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            <input id="guardarForm" type="submit" class="btn btn-outline-primary buttons" value="Guardar" />
+            <input id="cancelarForm" type="button" class="btn btn-outline-danger buttons" value="Salir" onclick="cancelForm()" />
+        </div>
+    </div>
+}
+
+<script>
+
+    function cancelForm() {
+        alertify.confirm("Alerta",
+            'Si continua se perderán todos los datos ingresados.',
+            function () {
+                alertify.error('Registro Cancelado');
+                setTimeout(function () { window.location.href = '/Captura'}, 1000);
+            },
+            function () {
+                alertify.success('Continue Editando');
+            }).set('movable', false);
+    }
+</script>

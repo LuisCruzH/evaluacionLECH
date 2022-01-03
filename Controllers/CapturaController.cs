@@ -9,36 +9,30 @@ namespace evaluacionLECH.Controllers
 {
     public class CapturaController : Controller
     {
+
         public ActionResult Index()
         {
-            //List<CapturaCLS> listaCaptura = null;
-            //using (var bd = new evaluacionBDEntities())
-            //{
-            //    listaCaptura = (from Prospecto in bd.prospecto
-            //                    join dProspecto in bd.datos_prospecto
-            //                    on Prospecto.id_prospecto equals dProspecto.id_prospecto
-            //                    join Documentos in bd.documentos
-            //                    on Prospecto.id_prospecto equals Documentos.id_prospecto
-            //                    select new CapturaCLS
-            //                    {
-            //                        iidProspecto = Prospecto.id_prospecto,
-            //                        nombreProspecto = Prospecto.nombre,
-            //                        aPaternoProspecto = Prospecto.a_paterno,
-            //                        aMaternoProspecto = Prospecto.a_materno,
-            //                        rfcProspecto = Prospecto.rfc,
-            //                        telefonoProspecto = Prospecto.telefono,
+            List<CapturaCLS> listaCaptura = null;
+            using (var bd = new evaluacionBDEntities())
+            {
+                listaCaptura = (from captura in bd.prospecto
+                                select new CapturaCLS
+                                {
+                                    nombreProspecto = captura.nombre,
+                                    aPaternoProspecto = captura.a_paterno,
+                                    aMaternoProspecto = captura.a_materno,
+                                }
 
-            //                        calle = dProspecto.calle,
-            //                        numero = dProspecto.numero,
-            //                        colonia = dProspecto.colonia,
-            //                        codigoPostal = (int)dProspecto.codigo_postal
-
-            //                    }).ToList();
-            //}
+                    ).ToList();
+            }
+            return View(listaCaptura);
+        }
+        public ActionResult Agregar()
+        {
             return View();
         }
         [HttpPost]
-        public ActionResult Index(CapturaCLS oCapturaCLS)
+        public ActionResult Agregar(CapturaCLS oCapturaCLS)
         {
             if (!ModelState.IsValid)
             {
@@ -54,6 +48,7 @@ namespace evaluacionLECH.Controllers
                     oProspecto.a_materno = oCapturaCLS.aMaternoProspecto;
                     oProspecto.rfc = oCapturaCLS.rfcProspecto;
                     oProspecto.telefono = oCapturaCLS.telefonoProspecto;
+                    oProspecto.estatus = 1;
                     bd.prospecto.Add(oProspecto);
                     bd.SaveChanges();
 

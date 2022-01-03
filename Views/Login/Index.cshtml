@@ -16,7 +16,7 @@
     <meta name="theme-color" content="#7952b3">
 
     <style>.minimo{min-height:100%;}</style>
-</head>
+</head> 
 <body class="text-center minimo">
     <div class=" form-signin minimo">
         @using (Ajax.BeginForm("Login", "Login", "", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Ingresar", UpdateTargetId = "divRespuesta" }, new { @id = "frmLogin" }))

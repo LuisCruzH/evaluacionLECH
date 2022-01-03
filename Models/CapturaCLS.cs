@@ -8,24 +8,25 @@ namespace evaluacionLECH.Models
 {
     public class CapturaCLS
     {
+        /*Prospecto*/
         public int iidProspecto { get; set; }
         [Display(Name = "Nombre")]
-        //[StringLength(25, ErrorMessage = "Longitud Maxima de 25")]
+        [StringLength(25, ErrorMessage = "Longitud Maxima de 25")]
         [Required]
         public string nombreProspecto { get; set; }
         [Display(Name = "Apellido Paterno")]
-        //[StringLength(15, ErrorMessage = "Longitud Maxima de 15")]
+        [StringLength(15, ErrorMessage = "Longitud Maxima de 15")]
         [Required]
         public string aPaternoProspecto { get; set; }
         [Display(Name = "Apellido Materno")]
-        //[StringLength(15, ErrorMessage = "Longitud Maxima de 15")]
+        [StringLength(15, ErrorMessage = "Longitud Maxima de 15")]
         public string aMaternoProspecto { get; set; }
         [Display(Name = "RFC")]
-        //[StringLength(13, ErrorMessage = "Longitud Maxima de 13")]
+        [StringLength(13, ErrorMessage = "Longitud Maxima de 13")]
         [Required]
         public string rfcProspecto { get; set; }
         [Display(Name = "Telefono")]
-        //[StringLength(13, ErrorMessage = "Longitud Maxima de 13")]
+        [StringLength(13, ErrorMessage = "Longitud Maxima de 13")]
         [Required]
         public string telefonoProspecto { get; set; }
         public int estatus { get; set; }
@@ -41,7 +42,6 @@ namespace evaluacionLECH.Models
         [Required]
         public string colonia { get; set; }
         [Display(Name = "Codigo Postal")]
-        //[StringLength(4, ErrorMessage = "Longitud maxima de 4")]
         [Required]
         public int codigoPostal { get; set; }
 
