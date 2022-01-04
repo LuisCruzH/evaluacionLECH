@@ -36,6 +36,7 @@
           <Property Name="telefono" Type="varchar" MaxLength="13" />
           <Property Name="rfc" Type="varchar" MaxLength="13" />
           <Property Name="estatus" Type="int" />
+          <Property Name="observaciones" Type="varchar" MaxLength="150" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -132,6 +133,7 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
           <NavigationProperty Name="datos_prospecto" Relationship="Self.prospecto_datos_prospecto" FromRole="prospecto" ToRole="datos_prospecto" />
           <NavigationProperty Name="documentos" Relationship="Self.prospecto_documentos" FromRole="prospecto" ToRole="documentos" />
           <Property Name="telefono" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="observaciones" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="prospecto_datos_prospecto">
           <End Role="prospecto" Type="Self.prospecto" Multiplicity="1" />
@@ -211,6 +213,7 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
           <EntitySetMapping Name="prospecto">
             <EntityTypeMapping TypeName="evaluacionBDModel.prospecto">
               <MappingFragment StoreEntitySet="prospecto">
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="id_prospecto" ColumnName="id_prospecto" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />

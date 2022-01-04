@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using evaluacionLECH.Helpers;
 
 namespace evaluacionLECH.Models
 {
@@ -46,5 +47,6 @@ namespace evaluacionLECH.Models
         [Required]
         public int codigoPostal { get; set; }
 
+        public ViewDataUploadFilesResult[] Files { get; set; }
     }
 }
