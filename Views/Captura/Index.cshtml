@@ -33,7 +33,7 @@
                             <td>@Html.LabelFor(p => Model[0].nombreProspecto)</td>
                             <td>@Html.LabelFor(p => Model[0].aPaternoProspecto)</td>
                             <td>@Html.LabelFor(p => Model[0].aMaternoProspecto)</td>
-                            <td>@Html.LabelFor(p => Model[0].estatus)</td>
+                            <td>@Html.LabelFor(p => Model[0].estatusProspecto)</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,7 +43,19 @@
                                 <td>@item.nombreProspecto</td>
                                 <td>@item.aPaternoProspecto</td>
                                 <td>@item.aMaternoProspecto</td>
-                                <td></td>
+                                @if (item.estatusProspecto == 1)
+                                {
+                                    <td>Enviado</td>
+                                }
+                                else if (item.estatusProspecto == 2)
+                                {
+                                    <td>Autorizado</td>
+                                }
+                                else if (item.estatusProspecto == 3)
+                                {
+                                    <td>Rechazado</td>
+                                }
+
                             </tr>
                         }
                     </tbody>
@@ -54,13 +66,31 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var table = $('#tablaProspecto').DataTable({
+                dom: 'Bfrtip',
                 select: true,
                 language:
                 {
                     url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
-                }
+                },
+                "paging": false,
+                initComplete: function () {
+                    $('.btnMostrar').attr('style', 'display:none;');
+                },
+                buttons: [
+                    {
+                        text: 'My button',
+                        action: function (e, dt, node, config) {
+                            alert('Button activated');
+                        }
+                    }
+                ]
             });
             new $.fn.dataTable.FixedColumns(table);
+            table.on('select deselect', function () {
+                var selectedRows = table.rows({ selected: true }).count();
+                console.log(selectedRows);
+                table.button(0).enable(selectedRows === 1);
+            });
         });
     </script>
 </div>

@@ -29,7 +29,8 @@ namespace evaluacionLECH.Models
         [StringLength(13, ErrorMessage = "Longitud Maxima de 13")]
         [Required]
         public string telefonoProspecto { get; set; }
-        public int estatus { get; set; }
+        [Display (Name ="Estatus")]
+        public int estatusProspecto { get; set; }
 
         /*Datos de Prospecto*/
         [Display(Name = "Calle")]

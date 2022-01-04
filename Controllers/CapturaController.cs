@@ -12,6 +12,7 @@ namespace evaluacionLECH.Controllers
 
         public ActionResult Index()
         {
+            
             List<CapturaCLS> listaCaptura = null;
             using (var bd = new evaluacionBDEntities())
             {
@@ -21,9 +22,9 @@ namespace evaluacionLECH.Controllers
                                     nombreProspecto = captura.nombre,
                                     aPaternoProspecto = captura.a_paterno,
                                     aMaternoProspecto = captura.a_materno,
+                                    estatusProspecto = captura.estatus.Value
                                 }
-
-                    ).ToList();
+                                ).ToList();
             }
             return View(listaCaptura);
         }
