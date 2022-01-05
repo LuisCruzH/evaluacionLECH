@@ -11,14 +11,14 @@ namespace evaluacionLECH.Controllers
     {
 
         public ActionResult Index()
-        {
-            
+        {            
             List<CapturaCLS> listaCaptura = null;
             using (var bd = new evaluacionBDEntities())
             {
                 listaCaptura = (from captura in bd.prospecto
                                 select new CapturaCLS
                                 {
+                                    iidProspecto = captura.id_prospecto,
                                     nombreProspecto = captura.nombre,
                                     aPaternoProspecto = captura.a_paterno,
                                     aMaternoProspecto = captura.a_materno,
@@ -66,5 +66,27 @@ namespace evaluacionLECH.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Evaluar(int id)
+        {
+            using (var bd = new evaluacionBDEntities())
+            {
+                CapturaCLS oCaptura = new CapturaCLS();
+                prospecto oProspecto = bd.prospecto.Where(p => p.id_prospecto.Equals(id)).First();
+                datos_prospecto oDatos_Prospecto = bd.datos_prospecto.Where(p => p.id_prospecto.Equals(id)).First();
+
+                oCaptura.nombreProspecto = oProspecto.nombre;
+                oCaptura.aPaternoProspecto = oProspecto.a_paterno;
+                oCaptura.aMaternoProspecto = oProspecto.a_materno;
+                oCaptura.telefonoProspecto = oProspecto.telefono;
+                oCaptura.rfcProspecto = oProspecto.rfc;
+                oCaptura.estatusProspecto = oProspecto.estatus.Value;
+                oCaptura.calle = oDatos_Prospecto.calle;
+                oCaptura.numero = oDatos_Prospecto.numero;
+                oCaptura.colonia = oDatos_Prospecto.colonia;
+                oCaptura.codigoPostal = oDatos_Prospecto.codigo_postal.Value;
+
+            }
+                return View(); 
+        }
     }
 }

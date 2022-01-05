@@ -10,6 +10,7 @@ namespace evaluacionLECH.Models
     public class CapturaCLS
     {
         /*Prospecto*/
+        [Display(Name ="ID")]
         public int iidProspecto { get; set; }
         [Display(Name = "Nombre")]
         [StringLength(25, ErrorMessage = "Longitud Maxima de 25")]
