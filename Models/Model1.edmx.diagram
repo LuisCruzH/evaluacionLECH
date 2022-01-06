@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="ab300abd1aa44e93a427dad410416d75" Name="Diagram1">
-        <EntityTypeShape EntityType="evaluacionBDModel.datos_prospecto" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="evaluacionBDModel.documentos" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="evaluacionBDModel.prospecto" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <AssociationConnector Association="evaluacionBDModel.prospecto_datos_prospecto" ManuallyRouted="false" />
-        <AssociationConnector Association="evaluacionBDModel.prospecto_documentos" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="evaluacionBDModel.usuario" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="evaluacionBDModel.datos_prospecto" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="evaluacionBDModel.documentos" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="evaluacionBDModel.prospecto" Width="1.5" PointX="0.75" PointY="2.125" />
+        <EntityTypeShape EntityType="evaluacionBDModel.usuario" Width="1.5" PointX="5.75" PointY="0.75" />
+        <AssociationConnector Association="evaluacionBDModel.prospecto_datos_prospecto" />
+        <AssociationConnector Association="evaluacionBDModel.prospecto_documentos" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

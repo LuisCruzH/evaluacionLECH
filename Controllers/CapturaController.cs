@@ -9,26 +9,7 @@ namespace evaluacionLECH.Controllers
 {
     public class CapturaController : Controller
     {
-
         public ActionResult Index()
-        {            
-            List<CapturaCLS> listaCaptura = null;
-            using (var bd = new evaluacionBDEntities())
-            {
-                listaCaptura = (from captura in bd.prospecto
-                                select new CapturaCLS
-                                {
-                                    iidProspecto = captura.id_prospecto,
-                                    nombreProspecto = captura.nombre,
-                                    aPaternoProspecto = captura.a_paterno,
-                                    aMaternoProspecto = captura.a_materno,
-                                    estatusProspecto = captura.estatus.Value
-                                }
-                                ).ToList();
-            }
-            return View(listaCaptura);
-        }
-        public ActionResult Agregar()
         {
             return View();
         }
@@ -41,6 +22,7 @@ namespace evaluacionLECH.Controllers
             }
             else
             {
+                
                 using (var bd = new evaluacionBDEntities())
                 {
                     prospecto oProspecto = new prospecto();
@@ -63,30 +45,29 @@ namespace evaluacionLECH.Controllers
                     bd.SaveChanges();
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Lista");
         }
 
-        public ActionResult Evaluar(int id)
-        {
-            using (var bd = new evaluacionBDEntities())
-            {
-                CapturaCLS oCaptura = new CapturaCLS();
-                prospecto oProspecto = bd.prospecto.Where(p => p.id_prospecto.Equals(id)).First();
-                datos_prospecto oDatos_Prospecto = bd.datos_prospecto.Where(p => p.id_prospecto.Equals(id)).First();
+        //[HttpPost]
+        //public ActionResult Upload(IEnumerable<HttpPostedFileBase> files)
+        //{
+        //    foreach (var file in files)
+        //    {
+        //        file.SaveAs(Server.MapPath("~/Update/" + file.FileName));
+        //    }
 
-                oCaptura.nombreProspecto = oProspecto.nombre;
-                oCaptura.aPaternoProspecto = oProspecto.a_paterno;
-                oCaptura.aMaternoProspecto = oProspecto.a_materno;
-                oCaptura.telefonoProspecto = oProspecto.telefono;
-                oCaptura.rfcProspecto = oProspecto.rfc;
-                oCaptura.estatusProspecto = oProspecto.estatus.Value;
-                oCaptura.calle = oDatos_Prospecto.calle;
-                oCaptura.numero = oDatos_Prospecto.numero;
-                oCaptura.colonia = oDatos_Prospecto.colonia;
-                oCaptura.codigoPostal = oDatos_Prospecto.codigo_postal.Value;
+        //    return View();
+        //}
 
-            }
-                return View(); 
-        }
+        //[HttpPost]
+        //public ActionResult Upload()
+        //{
+        //    foreach (var file in Request.Files)
+        //    {
+        //        file.SaveAs(Server.MapPath("~/Update/" + file.FileName));
+        //    }
+
+        //    return View();
+        //}
     }
 }

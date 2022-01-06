@@ -36,7 +36,7 @@
           <Property Name="telefono" Type="varchar" MaxLength="13" />
           <Property Name="rfc" Type="varchar" MaxLength="13" />
           <Property Name="estatus" Type="int" />
-          <Property Name="observaciones" Type="varchar" MaxLength="200" />
+          <Property Name="observaciones" Type="varchar" MaxLength="150" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -98,45 +98,69 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="evaluacionBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="evaluacionBDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="datos_prospecto" EntityType="evaluacionBDModel.datos_prospecto" />
+          <EntitySet Name="documentos" EntityType="evaluacionBDModel.documentos" />
+          <EntitySet Name="prospecto" EntityType="evaluacionBDModel.prospecto" />
+          <EntitySet Name="usuario" EntityType="evaluacionBDModel.usuario" />
+          <AssociationSet Name="prospecto_datos_prospecto" Association="evaluacionBDModel.prospecto_datos_prospecto">
+            <End Role="prospecto" EntitySet="prospecto" />
+            <End Role="datos_prospecto" EntitySet="datos_prospecto" />
+          </AssociationSet>
+          <AssociationSet Name="prospecto_documentos" Association="evaluacionBDModel.prospecto_documentos">
+            <End Role="prospecto" EntitySet="prospecto" />
+            <End Role="documentos" EntitySet="documentos" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="datos_prospecto">
           <Key>
             <PropertyRef Name="id_datos" />
           </Key>
-          <Property Name="id_datos" Type="Int32" Nullable="false" />
+          <Property Name="id_datos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="calle" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="colonia" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="codigo_postal" Type="Int32" />
           <Property Name="id_prospecto" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="prospecto" Relationship="Self.prospecto_datos_prospecto" FromRole="datos_prospecto" ToRole="prospecto" />
+          <NavigationProperty Name="prospecto" Relationship="evaluacionBDModel.prospecto_datos_prospecto" FromRole="datos_prospecto" ToRole="prospecto" />
         </EntityType>
         <EntityType Name="documentos">
           <Key>
             <PropertyRef Name="id_documento" />
           </Key>
-          <Property Name="id_documento" Type="Int32" Nullable="false" />
+          <Property Name="id_documento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="tipo_documento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="documento" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="id_prospecto" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="prospecto" Relationship="Self.prospecto_documentos" FromRole="documentos" ToRole="prospecto" />
+          <NavigationProperty Name="prospecto" Relationship="evaluacionBDModel.prospecto_documentos" FromRole="documentos" ToRole="prospecto" />
         </EntityType>
         <EntityType Name="prospecto">
           <Key>
             <PropertyRef Name="id_prospecto" />
           </Key>
-          <Property Name="id_prospecto" Type="Int32" Nullable="false" />
+          <Property Name="id_prospecto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="a_paterno" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="a_materno" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="rfc" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="estatus" Type="Int32" />
-          <NavigationProperty Name="datos_prospecto" Relationship="Self.prospecto_datos_prospecto" FromRole="prospecto" ToRole="datos_prospecto" />
-          <NavigationProperty Name="documentos" Relationship="Self.prospecto_documentos" FromRole="prospecto" ToRole="documentos" />
-          <Property Name="telefono" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="observaciones" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="datos_prospecto" Relationship="evaluacionBDModel.prospecto_datos_prospecto" FromRole="prospecto" ToRole="datos_prospecto" />
+          <NavigationProperty Name="documentos" Relationship="evaluacionBDModel.prospecto_documentos" FromRole="prospecto" ToRole="documentos" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="contrasena" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="prospecto_datos_prospecto">
-          <End Role="prospecto" Type="Self.prospecto" Multiplicity="1" />
-          <End Role="datos_prospecto" Type="Self.datos_prospecto" Multiplicity="*" />
+          <End Type="evaluacionBDModel.prospecto" Role="prospecto" Multiplicity="1" />
+          <End Type="evaluacionBDModel.datos_prospecto" Role="datos_prospecto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="prospecto">
               <PropertyRef Name="id_prospecto" />
@@ -147,8 +171,8 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
           </ReferentialConstraint>
         </Association>
         <Association Name="prospecto_documentos">
-          <End Role="prospecto" Type="Self.prospecto" Multiplicity="1" />
-          <End Role="documentos" Type="Self.documentos" Multiplicity="*" />
+          <End Type="evaluacionBDModel.prospecto" Role="prospecto" Multiplicity="1" />
+          <End Type="evaluacionBDModel.documentos" Role="documentos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="prospecto">
               <PropertyRef Name="id_prospecto" />
@@ -158,29 +182,6 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="evaluacionBDEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="datos_prospecto" EntityType="Self.datos_prospecto" />
-          <EntitySet Name="documentos" EntityType="Self.documentos" />
-          <EntitySet Name="prospecto" EntityType="Self.prospecto" />
-          <AssociationSet Name="prospecto_datos_prospecto" Association="Self.prospecto_datos_prospecto">
-            <End Role="prospecto" EntitySet="prospecto" />
-            <End Role="datos_prospecto" EntitySet="datos_prospecto" />
-          </AssociationSet>
-          <AssociationSet Name="prospecto_documentos" Association="Self.prospecto_documentos">
-            <End Role="prospecto" EntitySet="prospecto" />
-            <End Role="documentos" EntitySet="documentos" />
-          </AssociationSet>
-          <EntitySet Name="usuario" EntityType="evaluacionBDModel.usuario" />
-        </EntityContainer>
-        <EntityType Name="usuario">
-          <Key>
-            <PropertyRef Name="id_usuario" />
-          </Key>
-          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="usuario1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="contrasena" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -190,35 +191,36 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
           <EntitySetMapping Name="datos_prospecto">
             <EntityTypeMapping TypeName="evaluacionBDModel.datos_prospecto">
               <MappingFragment StoreEntitySet="datos_prospecto">
-                <ScalarProperty Name="id_datos" ColumnName="id_datos" />
-                <ScalarProperty Name="calle" ColumnName="calle" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
-                <ScalarProperty Name="colonia" ColumnName="colonia" />
-                <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
                 <ScalarProperty Name="id_prospecto" ColumnName="id_prospecto" />
+                <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
+                <ScalarProperty Name="colonia" ColumnName="colonia" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="calle" ColumnName="calle" />
+                <ScalarProperty Name="id_datos" ColumnName="id_datos" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="documentos">
             <EntityTypeMapping TypeName="evaluacionBDModel.documentos">
               <MappingFragment StoreEntitySet="documentos">
-                <ScalarProperty Name="id_documento" ColumnName="id_documento" />
-                <ScalarProperty Name="tipo_documento" ColumnName="tipo_documento" />
-                <ScalarProperty Name="documento" ColumnName="documento" />
                 <ScalarProperty Name="id_prospecto" ColumnName="id_prospecto" />
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="tipo_documento" ColumnName="tipo_documento" />
+                <ScalarProperty Name="id_documento" ColumnName="id_documento" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="prospecto">
             <EntityTypeMapping TypeName="evaluacionBDModel.prospecto">
               <MappingFragment StoreEntitySet="prospecto">
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="id_prospecto" ColumnName="id_prospecto" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="a_paterno" ColumnName="a_paterno" />
-                <ScalarProperty Name="a_materno" ColumnName="a_materno" />
-                <ScalarProperty Name="rfc" ColumnName="rfc" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
                 <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="rfc" ColumnName="rfc" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="a_materno" ColumnName="a_materno" />
+                <ScalarProperty Name="a_paterno" ColumnName="a_paterno" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_prospecto" ColumnName="id_prospecto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

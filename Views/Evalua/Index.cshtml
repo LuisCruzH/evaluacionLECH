@@ -1,0 +1,116 @@
+﻿@using evaluacionLECH.Models
+@model CapturaCLS
+@{
+    ViewBag.Title = "Evaluación de prospecto";
+    List<SelectListItem> listaEstatus = (List<SelectListItem>)ViewBag.listEstatus;
+}
+<style>
+    .espacio {
+        margin-bottom: 3rem;
+    }
+
+    .itemAltura {
+        margin-top: 1rem;
+    }
+
+    .buttons {
+        margin: 0.5rem;
+    }
+</style>
+
+@using (Html.BeginForm("Index", "Evalua", FormMethod.Post, new { @class = "espacio", @style = "margin-top:1.5rem;" }))
+{
+    <div class="row" style="margin-bottom:2rem;">
+        <div class="col" style="text-align:center;">
+            <h2>
+                <i class="fas fa-user-edit"></i>&nbsp;&nbsp;Evaluación de Prospecto
+            </h2>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            Datos generales
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6 justify-content-center">
+                    @Html.LabelFor(p => p.iidProspecto, new { @for = "txtID" })
+                    @Html.TextBoxFor(p => p.iidProspecto, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12 col-sm-6 col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.nombreProspecto, new { @for = "txtNombre" })
+                    @Html.TextBoxFor(p => p.nombreProspecto, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.aPaternoProspecto, new { @for = "txtaPaterno" })
+                    @Html.TextBoxFor(p => p.aPaternoProspecto, new { @class = "form-control", @id = "txtaPaterno", @disabled = "disabled" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.aMaternoProspecto, new { @for = "txtaMaterno" })
+                    @Html.TextBoxFor(p => p.aMaternoProspecto, new { @class = "form-control", @id = "txtaMaterno", @disabled = "disabled" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.rfcProspecto, new { @for = "txtRfc" })
+                    @Html.TextBoxFor(p => p.rfcProspecto, new { @class = "form-control", @id = "txtRfc", @disabled = "disabled" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.telefonoProspecto, new { @for = "txtTelefono" })
+                    @Html.TextBoxFor(p => p.telefonoProspecto, new { @class = "form-control", @id = "txtTelefono", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+        <div class="card-header" style="margin-top:2rem;">
+            Dirección
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-12 col-sm-6 col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.calle, new { @for = "txtCalle" })
+                    @Html.TextBoxFor(p => p.calle, new { @class = "form-control", @id = "txtCalle", @disabled = "disabled" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.numero, new { @for = "txtNumero" })
+                    @Html.TextBoxFor(p => p.numero, new { @class = "form-control", @id = "txtNumero", @disabled = "disabled" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.colonia, new { @for = "txtColonia" })
+                    @Html.TextBoxFor(p => p.colonia, new { @class = "form-control", @id = "txtColonia", @disabled = "disabled" })
+                </div>
+                <div class="form-group col-12 col-sm-6  col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.codigoPostal, new { @for = "txtCPostal" })
+                    @Html.TextBoxFor(p => p.codigoPostal, new { @class = "form-control", @id = "txtCPostal", @type = "number", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Modificar
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6 justify-content-center">
+                        @Html.LabelFor(p => p.estatusProspecto, new { @for = "txtEstatus" })
+                        @Html.DropDownList("estatusProspecto", listaEstatus, null, new { @class = "form-control" })
+                    </div>
+                    <div class="col-6 justify-content-center">
+                        @Html.LabelFor(p => p.observacionesProspecto, new { @for = "txtEstatus" })
+                        @Html.TextAreaFor(p=>p.observacionesProspecto, new { @class="form-control"})
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            <input id="guardarForm" type="submit" class="btn btn-outline-primary buttons" onclick="guardado()" value="Guardar" />
+            @Html.ActionLink("Volver", "Index", "Lista", null, new { @class = "btn btn-outline-danger buttons", @disabled = "disabled" })
+        </div>
+    </div>
+}
+
+<script>
+    function guardado() {
+        alertify.success('Prospecto modificado');
+          document.location.href = "@Url.Action("Index","Lista")";
+    }
+</script>
