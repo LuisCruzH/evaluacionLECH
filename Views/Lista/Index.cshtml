@@ -3,92 +3,55 @@
 @{
     ViewBag.Title = "Lista de prospectos";
 }
-<style>
-    .espacio {
-        margin-bottom: 3rem;
-    }
 
-    .itemAltura {
-        margin-top: 1rem;
-    }
+@Html.Partial("_TablaLista", Model)
 
-    .buttons {
-        margin: 0.5rem;
-    }
-</style>
-<div class="row" style="margin-top:1.5rem">
-    <div class="row" style="margin-bottom:2rem;">
-        <div class="col" style="text-align:center;">
-            <h2>
-                <i class="fas fa-users"></i>&nbsp;&nbsp;Lista de Prospectos Ingresados
-            </h2>
-        </div>
-    </div>
-    <div class="card border-primary">
-        <div class="card-body">
-            <div class="row">
-                <table id="tablaProspecto" class="table hover display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <td>@Html.LabelFor(p => Model[0].iidProspecto)</td>
-                            <td>@Html.LabelFor(p => Model[0].nombreProspecto)</td>
-                            <td>@Html.LabelFor(p => Model[0].aPaternoProspecto)</td>
-                            <td>@Html.LabelFor(p => Model[0].aMaternoProspecto)</td>
-                            <td>@Html.LabelFor(p => Model[0].estatusProspecto)</td>
-                            <td>Operaciones</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.iidProspecto</td>
-                                <td>@item.nombreProspecto</td>
-                                <td>@item.aPaternoProspecto</td>
-                                <td>@item.aMaternoProspecto</td>
-                                @if (item.estatusProspecto == 1)
-                                {
-                                    <td>Enviado</td>
-                                }
-                                else if (item.estatusProspecto == 2)
-                                {
-                                    <td>Autorizado</td>
-                                }
-                                else if (item.estatusProspecto == 3)
-                                {
-                                    <td>Rechazado</td>
-                                }
-                                <td>
-                                    @Html.ActionLink(" ", "index", "Evalua", new { id = item.iidProspecto }, new { @class = "btn btn-outline-primary fas fa-hammer" })
-                                    @Html.ActionLink(" Ver", "index", "Evalua", new { id = item.iidProspecto }, new { @class = "btn btn-outline-success fas fa-eye" })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+
+
+<div class="modal fade" id="estatusModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="estatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="estatusModalLabel">Datos de registro seleccionado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="muestraModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Datos de registro seleccionado</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+            @using (Ajax.BeginForm("editarlo", "Lista", null, new AjaxOptions { HttpMethod = "POST", OnSuccess = "Editado" }, new { @id = "frmGuarda" }))
+            {
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Estatus</label>
 
+                            <input id="txtEstatus" type="text" class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label>Observaciones</label>
+                            <input id="txtObs" type="text" class="form-control" />
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button id="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Editar" />
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>
 <script type="text/javascript">
+    function editar(id) {
+        $("#Titulo").val(id);
+        console.log(id);
+        $.get("Lista/recuperarDatos/?titulo=" + id, function (data) {
+            $("#txtEstatus").val(data.estatusProspecto);
+            $("#txtObs").val(data.observacionesProspecto);
+        });
+    }
+    function Editado(res) {
+        $("#frmGuarda").trigger("submit");
+        $("#closeModal").click();
+        alert("ya");
+    }
     $(document).ready(function () {
         var table = $('#tablaProspecto').DataTable({
             "language":
@@ -96,10 +59,8 @@
                 url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
             },
             "paging": false,
-            "columnDefs": [
-                { className: "dt-body-center", "targets": [4] }
-            ]
+            scrollX: true,
+           
         });
-        new $.fn.dataTable.FixedColumns(table);
     });
 </script>

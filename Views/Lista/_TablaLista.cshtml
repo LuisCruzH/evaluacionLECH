@@ -1,0 +1,77 @@
+﻿
+@using evaluacionLECH.Models
+@model List<CapturaCLS>
+
+<style>
+    .espacio {
+        margin-bottom: 3rem;
+    }
+
+    .itemAltura {
+        margin-top: 1rem;
+    }
+
+    .buttons {
+        margin: 0.5rem;
+    }
+</style>
+<div class="row" style="margin-top:1.5rem">
+    <div class="row" style="margin-bottom:2rem;">
+        <div class="col" style="text-align:center;">
+            <h2>
+                <i class="fas fa-users"></i>&nbsp;&nbsp;Lista de Prospectos Ingresados
+            </h2>
+        </div>
+    </div>
+    <div class="card border-primary">
+        <div class="card-body">
+            <div class="row">
+                @Html.Hidden("Titulo")
+                <table id="tablaProspecto" class="table hover display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <td>@Html.LabelFor(p => Model[0].iidProspecto)</td>
+                            <td>@Html.LabelFor(p => Model[0].nombreProspecto)</td>
+                            <td>@Html.LabelFor(p => Model[0].aPaternoProspecto)</td>
+                            <td>@Html.LabelFor(p => Model[0].aMaternoProspecto)</td>
+                            <td>@Html.LabelFor(p => Model[0].estatusProspecto)</td>
+                            <td>Operaciones</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.iidProspecto</td>
+                                <td>@item.nombreProspecto</td>
+                                <td>@item.aPaternoProspecto</td>
+                                <td>@item.aMaternoProspecto</td>
+                                @if (item.estatusProspecto == 1)
+                                {
+                                    <td>Enviado</td>
+                                }
+                                else if (item.estatusProspecto == 2)
+                                {
+                                    <td>Autorizado</td>
+                                }
+                                else if (item.estatusProspecto == 3)
+                                {
+                                    <td>Rechazado</td>
+                                }
+                                <td>
+                                    <button type="button" onclick="editar(@item.iidProspecto);" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#estatusModal">
+                                        <i class="far fa-edit"></i>
+                                    </button>
+                                    @Html.ActionLink(" Ver", "index", "Evalua", new { id = item.iidProspecto }, new { @class = "btn btn-outline-success fas fa-eye" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  
+</script>

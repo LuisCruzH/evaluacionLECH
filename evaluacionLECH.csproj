@@ -665,6 +665,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Lista\Index.cshtml" />
     <Content Include="Views\Evalua\Index.cshtml" />
+    <Content Include="Views\Lista\_TablaLista.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

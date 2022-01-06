@@ -84,33 +84,8 @@
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header">
-                Modificar
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6 justify-content-center">
-                        @Html.LabelFor(p => p.estatusProspecto, new { @for = "txtEstatus" })
-                        @Html.DropDownList("estatusProspecto", listaEstatus, null, new { @class = "form-control" })
-                    </div>
-                    <div class="col-6 justify-content-center">
-                        @Html.LabelFor(p => p.observacionesProspecto, new { @for = "txtEstatus" })
-                        @Html.TextAreaFor(p=>p.observacionesProspecto, new { @class="form-control"})
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="card-footer text-muted">
-            <input id="guardarForm" type="submit" class="btn btn-outline-primary buttons" onclick="guardado()" value="Guardar" />
             @Html.ActionLink("Volver", "Index", "Lista", null, new { @class = "btn btn-outline-danger buttons", @disabled = "disabled" })
         </div>
     </div>
 }
-
-<script>
-    function guardado() {
-        alertify.success('Prospecto modificado');
-          document.location.href = "@Url.Action("Index","Lista")";
-    }
-</script>
