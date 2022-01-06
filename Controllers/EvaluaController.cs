@@ -34,6 +34,7 @@ namespace evaluacionLECH.Controllers
             {
                 prospecto oProspecto = bd.prospecto.Where(p => p.id_prospecto.Equals(id)).First();
                 datos_prospecto oDatos_Prospecto = bd.datos_prospecto.Where(p => p.id_prospecto.Equals(id)).First();
+                documentos oDocumentos = bd.documentos.Where(p => p.id_prospecto.Equals(id)).First();
 
                 oCapturaCLS.iidProspecto = oProspecto.id_prospecto;
                 oCapturaCLS.nombreProspecto = oProspecto.nombre;
@@ -48,30 +49,12 @@ namespace evaluacionLECH.Controllers
                 oCapturaCLS.colonia = oDatos_Prospecto.colonia;
                 oCapturaCLS.codigoPostal = oDatos_Prospecto.codigo_postal.Value;
 
+                oCapturaCLS.colonia = oDocumentos.tipo_documento;
+                oCapturaCLS.colonia = oDocumentos.documento;
+
+
             }
             return View(oCapturaCLS);
-        }
-        [HttpPost]
-        public ActionResult Index (CapturaCLS oCapturaCLS, int id)
-        {
-            
-            if (!ModelState.IsValid)
-            {
-                ViewBag.listEstatus = listEstatus;
-                return View(oCapturaCLS);
-            }
-            else
-            {
-                int idProspecto = id;
-                using (var bd = new evaluacionBDEntities())
-                {
-                    prospecto oProspecto = bd.prospecto.Where(p => p.id_prospecto.Equals(idProspecto)).First();
-                    oProspecto.estatus = oCapturaCLS.estatusProspecto;
-                    oProspecto.observaciones = oCapturaCLS.observacionesProspecto;
-                    bd.SaveChanges();
-                }
-            }
-            return RedirectToAction("Index","Lista");
         }
     }
 }

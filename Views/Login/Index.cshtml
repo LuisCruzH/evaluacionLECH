@@ -43,7 +43,8 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script type="text/javascript">
         function Ingresar(rpta) {
-            if (rpta == "1") {
+            console.log(rpta)
+            if (rpta != null) {
 
                 setTimeout(function () { window.location.href = "@Url.Action("Index","Lista")" }, 1000);
                     } else {

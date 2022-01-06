@@ -2,7 +2,6 @@
 @model CapturaCLS
 @{
     ViewBag.Title = "Evaluación de prospecto";
-    List<SelectListItem> listaEstatus = (List<SelectListItem>)ViewBag.listEstatus;
 }
 <style>
     .espacio {
@@ -18,9 +17,9 @@
     }
 </style>
 
-@using (Html.BeginForm("Index", "Evalua", FormMethod.Post, new { @class = "espacio", @style = "margin-top:1.5rem;" }))
+@using (Html.BeginForm("Index", "Evalua", FormMethod.Post, new { @class = "espacio", @style = "margin-top:0.5rem;" }))
 {
-    <div class="row" style="margin-bottom:2rem;">
+    <div class="row" style="margin-bottom:0.5rem;">
         <div class="col" style="text-align:center;">
             <h2>
                 <i class="fas fa-user-edit"></i>&nbsp;&nbsp;Evaluación de Prospecto
@@ -82,6 +81,14 @@
                     @Html.LabelFor(p => p.codigoPostal, new { @for = "txtCPostal" })
                     @Html.TextBoxFor(p => p.codigoPostal, new { @class = "form-control", @id = "txtCPostal", @type = "number", @disabled = "disabled" })
                 </div>
+            </div>
+        </div>
+        <div class="card-header" style="margin-top:2rem;">
+            Documentos
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!--Falta el llenado de documentos-->
             </div>
         </div>
         <div class="card-footer text-muted">

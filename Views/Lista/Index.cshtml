@@ -2,6 +2,7 @@
 @model List<CapturaCLS>
 @{
     ViewBag.Title = "Lista de prospectos";
+    List<SelectListItem> listaEstatus = (List<SelectListItem>)ViewBag.listEstatus;
 }
 
 @Html.Partial("_TablaLista", Model)
@@ -13,25 +14,26 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="estatusModalLabel">Datos de registro seleccionado</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-            @using (Ajax.BeginForm("editarlo", "Lista", null, new AjaxOptions { HttpMethod = "POST", OnSuccess = "Editado" }, new { @id = "frmGuarda" }))
+            @using (Ajax.BeginForm("editarlo", "Lista", null, new AjaxOptions { HttpMethod = "POST", OnSuccess = "editarlo" }, new { @id = "frmGuarda" }))
             {
+                @Html.Hidden("titulo")
+
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12">
-                            <label>Estatus</label>
-
-                            <input id="txtEstatus" type="text" class="form-control" />
+                            @Html.Label("Estatus")
+                            @Html.DropDownList("estatusProspecto", listaEstatus, new { @class = "form-control", @id = "txtEstatus" })
                         </div>
                         <div class="col-12">
                             <label>Observaciones</label>
-                            <input id="txtObs" type="text" class="form-control" />
+                            @Html.TextBox("observacionesProspecto", null, new { @class = "form-control", @id = "txtObs" })
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <input type="submit" class="btn btn-primary" value="Editar" />
                 </div>
             }
@@ -39,18 +41,24 @@
     </div>
 </div>
 <script type="text/javascript">
-    function editar(id) {
-        $("#Titulo").val(id);
-        console.log(id);
+    function traer(id) {
+        document.getElementById("titulo").value = id;
+
         $.get("Lista/recuperarDatos/?titulo=" + id, function (data) {
             $("#txtEstatus").val(data.estatusProspecto);
             $("#txtObs").val(data.observacionesProspecto);
         });
     }
-    function Editado(res) {
-        $("#frmGuarda").trigger("submit");
-        $("#closeModal").click();
-        alert("ya");
+    function editarlo(res) {
+        if (res == 1) {
+            $("#frmGuarda").trigger("submit");
+            document.getElementById("closeModal").click();
+            alert("ya");
+        } else {
+            alert("nel prro");
+        }
+        
+
     }
     $(document).ready(function () {
         var table = $('#tablaProspecto').DataTable({
@@ -59,8 +67,8 @@
                 url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
             },
             "paging": false,
-            scrollX: true,
-           
+            scrollY: "65vh",
+            scrollX: true
         });
     });
 </script>

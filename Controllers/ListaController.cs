@@ -41,19 +41,20 @@ namespace evaluacionLECH.Controllers
                                 }
                                 ).ToList();
             }
+
+
             return View(listaCaptura);
         }
-        public string editarlo(CapturaCLS oCapturaCLS, int titulo)
+        public ActionResult editarlo(CapturaCLS oCapturaCLS, int titulo)
         {
-            string rpta = "";
             using (var bd = new evaluacionBDEntities())
             {
                 prospecto oProspecto = bd.prospecto.Where(p => p.id_prospecto.Equals(titulo)).First();
                 oProspecto.estatus = oCapturaCLS.estatusProspecto;
                 oProspecto.observaciones = oCapturaCLS.observacionesProspecto;
-                rpta = bd.SaveChanges().ToString();
+                bd.SaveChanges().ToString();
             }
-            return rpta;
+            return RedirectToAction("Index", "Lista");
         }
         public JsonResult recuperarDatos (int titulo)
         {

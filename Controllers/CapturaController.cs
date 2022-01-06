@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,20 +10,38 @@ namespace evaluacionLECH.Controllers
 {
     public class CapturaController : Controller
     {
+        #region ViewBag
+        List<SelectListItem> listArchivos = new List<SelectListItem>()
+            {
+            new SelectListItem {
+                    Text = "-Seleccione-", Value = "0"
+                },
+                new SelectListItem {
+                    Text = "PDF", Value = "PDF"
+                },
+                new SelectListItem {
+                    Text = "Docx", Value = "Docx"
+                },
+                new SelectListItem {
+                    Text = "jpeg", Value = "jpeg"
+                }
+            };
+        #endregion
         public ActionResult Index()
         {
+            ViewBag.listArchivos = listArchivos;
             return View();
         }
         [HttpPost]
-        public ActionResult Agregar(CapturaCLS oCapturaCLS)
+        public ActionResult Index(CapturaCLS oCapturaCLS, HttpPostedFileBase[] docs)
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.listArchivos = listArchivos;
                 return View(oCapturaCLS);
             }
             else
             {
-                
                 using (var bd = new evaluacionBDEntities())
                 {
                     prospecto oProspecto = new prospecto();
@@ -43,31 +62,27 @@ namespace evaluacionLECH.Controllers
                     oDatosPros.id_prospecto = oProspecto.id_prospecto;
                     bd.datos_prospecto.Add(oDatosPros);
                     bd.SaveChanges();
+
+                    if (docs != null)
+                    {
+                        List<string> files = new List<string>();
+                        foreach (var doc in docs)
+                        {
+                            doc.SaveAs(Server.MapPath("~/Content/Documents/" + doc.FileName));
+                            files.Add(doc.FileName);
+
+                            documentos oDocumento = new documentos();
+                            oDocumento.tipo_documento = oCapturaCLS.tipoDocumento;
+                            oDocumento.documento = doc.FileName;
+                            oDocumento.id_prospecto = oProspecto.id_prospecto;
+                            bd.documentos.Add(oDocumento);
+                            bd.SaveChanges();
+                        }
+                        oCapturaCLS.documentoList = files;
+                    }
                 }
             }
-            return RedirectToAction("Index","Lista");
+            return RedirectToAction("Index", "Lista");
         }
-
-        //[HttpPost]
-        //public ActionResult Upload(IEnumerable<HttpPostedFileBase> files)
-        //{
-        //    foreach (var file in files)
-        //    {
-        //        file.SaveAs(Server.MapPath("~/Update/" + file.FileName));
-        //    }
-
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult Upload()
-        //{
-        //    foreach (var file in Request.Files)
-        //    {
-        //        file.SaveAs(Server.MapPath("~/Update/" + file.FileName));
-        //    }
-
-        //    return View();
-        //}
     }
 }

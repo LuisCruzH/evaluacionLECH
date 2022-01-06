@@ -182,7 +182,7 @@ advertencia 6002: La tabla o vista 'evaluacionBD.dbo.usuario' no tiene definida 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
