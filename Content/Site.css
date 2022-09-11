@@ -21,6 +21,19 @@
         direction: ltr;
         cursor: pointer;
     }
+.navbar-custom {
+    background-color: #006d77;
+}
+
+    .navbar-custom .navbar-brand,
+    .navbar-custom .navbar-text,
+    .navbar-custom .nav-link {
+        color: white;
+    }
+
+    .nav-link:hover{
+        color: #ffff !important;
+    }
 
 /* Fixes for IE < 8 */
 @media screen\9 {
@@ -30,3 +43,4 @@
         height: 100%;
     }
 }
+

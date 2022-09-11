@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -35,6 +36,13 @@ namespace evaluacionLECH.Controllers
                 prospecto oProspecto = bd.prospecto.Where(p => p.id_prospecto.Equals(id)).First();
                 datos_prospecto oDatos_Prospecto = bd.datos_prospecto.Where(p => p.id_prospecto.Equals(id)).First();
                 documentos oDocumentos = bd.documentos.Where(p => p.id_prospecto.Equals(id)).First();
+
+                DirectoryInfo di = new DirectoryInfo(@"C:\Users\luisc\source\repos\LuisCruzH\evaluacionLECH\Content\Documents");
+                foreach (var fi in di.GetFiles(id.ToString()))
+                {
+                    oCapturaCLS.nombreDocumento =  fi.Name;
+                }
+
 
                 oCapturaCLS.iidProspecto = oProspecto.id_prospecto;
                 oCapturaCLS.nombreProspecto = oProspecto.nombre;

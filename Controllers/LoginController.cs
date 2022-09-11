@@ -19,7 +19,7 @@ namespace evaluacionLECH.Controllers
 
         public string Login(LoginCLS oUser)
         {
-            string mensaje = "";          
+            string mensaje = "";
             if (!ModelState.IsValid)
             {
                 var query = (from state in ModelState.Values
@@ -35,12 +35,19 @@ namespace evaluacionLECH.Controllers
             else
             {
                 string usuario = oUser.username;
-                string pass = oUser.password;                
+                string pass = oUser.password;
                 using (var bd = new evaluacionBDEntities())
                 {
-                    int numeroVeces = bd.usuario.Where(p=>p.usuario1 == usuario && p.contrasena == pass).Count();
+                    int numeroVeces = bd.usuario.Where(p => p.usuario1 == usuario && p.contrasena == pass).Count();
                     mensaje = numeroVeces.ToString();
-                    if(mensaje== "0") mensaje = "Usuario o contrasena incorrecto";
+                    if (mensaje == "0")
+                    {
+                        mensaje = "Error";
+                    }
+                    else if (mensaje != "0")
+                    {
+                        mensaje = "Pasa";
+                    }
                 }
             }
             return mensaje;

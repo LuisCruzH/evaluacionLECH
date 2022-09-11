@@ -13,13 +13,20 @@
     <title>Login</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/login.css" rel="stylesheet" />
+    <!--Alertify CSS-->
+    <link href="~/Content/alertifyjs/alertify.min.css" rel="stylesheet" />
+    <link href="~/Content/alertifyjs/themes/default.min.css" rel="stylesheet" />
     <meta name="theme-color" content="#7952b3">
 
-    <style>.minimo{min-height:100%;}</style>
+    <style>
+        .minimo {
+            min-height: 100%;
+        }
+    </style>
 </head> 
 <body class="text-center minimo align-items-center vh-100">
-    <div class=" form-signin minimo" >
-        @using (Ajax.BeginForm("Login", "Login", "", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Ingresar", UpdateTargetId = "divRespuesta" }, new { @id = "frmLogin" }))
+    <div class=" form-signin minimo">
+        @using (Ajax.BeginForm("Login", "Login", "", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Ingresar" }, new { @id = "frmLogin" }))
         {
             <img class="mb-4" src="~/Content/Img/portafolio.png" alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Seguimiento de clientes</h1>
@@ -34,21 +41,20 @@
 
             <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
             <p class="mt-5 mb-3 text-muted">&copy; LECH - 2022</p>
-            <div id="divRespuesta" style="display:none;"></div>
         }
     </div>
 
 
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/alertify.min.js"></script>
     <script type="text/javascript">
         function Ingresar(rpta) {
             console.log(rpta)
-            if (rpta != null) {
-
-                setTimeout(function () { window.location.href = "@Url.Action("Index","Lista")" }, 1000);
-                    } else {
-                alert("Usuario o contraseña incorrectos");
+            if (rpta == "Pasa") {
+                setTimeout(function () { window.location.href = "@Url.Action("Index","Lista")" }, 500);
+            } else if (rpta == "Error") {
+                alertify.alert("Usuario o contraseña incorrectos.").set({ 'closable': false, 'movable': false }).setHeader('Ocurrio un error!');
             }
         }
     </script>

@@ -88,7 +88,10 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <!--Falta el llenado de documentos-->
+                <div class="form-group col-12 col-sm-6 col-md-4 itemAltura">
+                    @Html.LabelFor(p => p.nombreDocumento, new { @for = "txtDocumento" })
+                    @Html.TextBoxFor(p => p.nombreDocumento, new { @class = "form-control", @id = "txtDocumento", @disabled = "disabled" })
+                </div>
             </div>
         </div>
         <div class="card-footer text-muted">

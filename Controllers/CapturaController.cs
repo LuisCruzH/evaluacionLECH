@@ -45,33 +45,34 @@ namespace evaluacionLECH.Controllers
                 using (var bd = new evaluacionBDEntities())
                 {
                     prospecto oProspecto = new prospecto();
-                    oProspecto.nombre = oCapturaCLS.nombreProspecto;
-                    oProspecto.a_paterno = oCapturaCLS.aPaternoProspecto;
-                    oProspecto.a_materno = oCapturaCLS.aMaternoProspecto;
-                    oProspecto.rfc = oCapturaCLS.rfcProspecto;
-                    oProspecto.telefono = oCapturaCLS.telefonoProspecto;
-                    oProspecto.estatus = 1;
-                    bd.prospecto.Add(oProspecto);
-                    bd.SaveChanges();
-
-                    datos_prospecto oDatosPros = new datos_prospecto();
-                    oDatosPros.calle = oCapturaCLS.calle;
-                    oDatosPros.numero = oCapturaCLS.numero;
-                    oDatosPros.colonia = oCapturaCLS.colonia;
-                    oDatosPros.codigo_postal = oCapturaCLS.codigoPostal;
-                    oDatosPros.id_prospecto = oProspecto.id_prospecto;
-                    bd.datos_prospecto.Add(oDatosPros);
-                    bd.SaveChanges();
-
                     if (docs != null)
                     {
+                        oProspecto.nombre = oCapturaCLS.nombreProspecto;
+                        oProspecto.a_paterno = oCapturaCLS.aPaternoProspecto;
+                        oProspecto.a_materno = oCapturaCLS.aMaternoProspecto;
+                        oProspecto.rfc = oCapturaCLS.rfcProspecto;
+                        oProspecto.telefono = oCapturaCLS.telefonoProspecto;
+                        oProspecto.estatus = 1;
+                        bd.prospecto.Add(oProspecto);
+                        bd.SaveChanges();
+
+                        datos_prospecto oDatosPros = new datos_prospecto();
+                        oDatosPros.calle = oCapturaCLS.calle;
+                        oDatosPros.numero = oCapturaCLS.numero;
+                        oDatosPros.colonia = oCapturaCLS.colonia;
+                        oDatosPros.codigo_postal = oCapturaCLS.codigoPostal;
+                        oDatosPros.id_prospecto = oProspecto.id_prospecto;
+                        bd.datos_prospecto.Add(oDatosPros);
+                        bd.SaveChanges();
+
+
                         List<string> files = new List<string>();
                         foreach (var doc in docs)
                         {
-                            doc.SaveAs(Server.MapPath("~/Content/Documents/" + doc.FileName));
+                            documentos oDocumento = new documentos();
+                            doc.SaveAs(Server.MapPath("~/Content/Documents/" + oProspecto.id_prospecto +" " +doc.FileName));
                             files.Add(doc.FileName);
 
-                            documentos oDocumento = new documentos();
                             oDocumento.tipo_documento = oCapturaCLS.tipoDocumento;
                             oDocumento.documento = doc.FileName;
                             oDocumento.id_prospecto = oProspecto.id_prospecto;
@@ -79,7 +80,7 @@ namespace evaluacionLECH.Controllers
                             bd.SaveChanges();
                         }
                         oCapturaCLS.documentoList = files;
-                    }
+                    }                    
                 }
             }
             return RedirectToAction("Index", "Lista");
